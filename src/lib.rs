@@ -273,6 +273,25 @@ pub unsafe fn concat_slice_unordered<'a, T>(a: &'a [T], b: &'a [T]) -> Result<&'
     concat_slice(a, b)
 }
 
+
+// Can't use the macro-call itself within the `doc` attribute. So force it to eval it as part of
+// the macro invocation.
+// 
+// The inspiration for the macro and implementation is from
+// <https://github.com/GuillaumeGomez/doc-comment>
+//
+// MIT License
+//
+// Copyright (c) 2018 Guillaume Gomez
+macro_rules! insert_as_doc {
+    { $content:expr } => {
+        #[doc = $content] extern { }
+    }
+}
+
+// Provides the README.md as doc, to ensure the example works!
+insert_as_doc!(include_str!("../README.md"));
+
 #[cfg(test)]
 mod tests {
     use super::{concat, concat_unordered, concat_slice, concat_slice_unordered, Error};
