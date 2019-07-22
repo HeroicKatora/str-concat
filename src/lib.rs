@@ -1,6 +1,10 @@
 #![no_std]
 use core::{mem, slice, str};
 
+mod proof;
+
+pub use proof::AllocationProof;
+
 /// Error that can occur during [`concat`](fn.concat.html).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Error {
